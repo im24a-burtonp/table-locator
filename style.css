@@ -1,0 +1,112 @@
+@font-face {
+    font-family: "wakerobin";
+    src: url("assets/wakerobin-bold.otf") format("opentype");
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #000000;
+    justify-content: center;
+    align-items: center; 
+    margin: 0;
+}
+
+.kiosk {
+    height: 100vh;
+    aspect-ratio: 9 / 16;
+    background-color: #080d3a;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+}
+
+.logo {
+    margin-top: 60px;
+    margin-bottom: 10px;
+}
+
+.locator-display {
+    background-color: #f7f7f7;
+    width: 250px;
+    height: 300px;
+    margin-bottom: 20px;
+    border-radius: 20px;
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 200px;
+    margin: auto;
+}
+
+.number > button,
+.clear > button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    font-weight: bold;
+    border: none;
+    color: #091a45;
+
+    background-color: #f3f4f6;
+    border-radius: 25px;
+    height: 50px;
+    box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.08);
+}
+
+.number > button {
+    width: 60px;
+    font-size: 1.5rem;
+}
+
+.clear > button{
+    width: 80px;
+    font-size: 1rem;
+}
+
+.bottom-row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.submit {
+    margin-top: 60px;
+    border-radius: 25px;
+    border: none;
+    height: 50px;
+    width: 250px;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    background-color: #C40000;
+    color: hsl(0, 0%, 90%);
+}
+
+p {
+    text-align: center;
+    color: #ffcd78;
+    font-family: wakerobin;
+    font-weight: bolder;
+    font-size: 1.65rem;
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+.input-wrapper {
+    background-color: #0c124b;
+    padding: 14px 16px;
+    margin: 0 0 0;
+    border-radius: 28px;
+    box-sizing: border-box;
+    border: 2px solid rgba(255, 255, 255, 0.08);
+}
