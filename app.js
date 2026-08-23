@@ -2,8 +2,23 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 
 const container = document.getElementById("locator-display");
+const kiosk = document.querySelector(".kiosk");
+const kioskContent = document.querySelector(".kiosk-content");
+
+function fitKioskContent() {
+  kioskContent.style.setProperty("--content-scale", "1");
+  const contentWidth = kioskContent.scrollWidth;
+  const contentHeight = kioskContent.scrollHeight;
+  const scale = Math.min(
+    1,
+    kiosk.clientWidth / contentWidth,
+    kiosk.clientHeight / contentHeight
+  ) * 0.99;
+  kioskContent.style.setProperty("--content-scale", scale.toString());
+}
 
 const scene = new THREE.Scene();
+scene.fog = new THREE.Fog(0x000000, 4, 10);
 
 const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 10);
 camera.position.set(0, 1.1, 7.5);
@@ -22,18 +37,37 @@ scene.add(dir);
 let model = null;
 const loader = new GLTFLoader();
 
-loader.load(
-  "assets/locator.glb",
-  (gltf) => {
-    model = gltf.scene;
-    model.position.set(0, -0.4, 0);
-    model.rotation.set(0, 2.1, 0)
-    model.scale.setScalar(1);
-    scene.add(model);
-  },
-  undefined,
-  (err) => console.error("Model load failed:", err)
-);
+loader.load("assets/locator.glb", (gltf) => {
+  model = gltf.scene;
+
+  model.position.set(0, -0.4, 0);
+  model.rotation.set(0, 2.1, 0);
+  model.scale.setScalar(1);
+
+  model.traverse((object) => {
+    if (!object.isMesh) return;
+
+    if (object.name === "Plastic") {
+      object.material = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        roughness: 1
+      });
+    }
+
+    if (object.name === "Cover") {
+      object.material = new THREE.MeshStandardMaterial({
+        color: 0xc7c7c7,
+        roughness: 0,
+        opacity: 0.4,
+        transparent: true
+      });
+    }
+  });
+
+  scene.add(model);
+});
+
+
 
 function resizeRendererToContainer() {
   const w = Math.floor(container.clientWidth);
@@ -50,7 +84,11 @@ function resizeRendererToContainer() {
 const ro = new ResizeObserver(resizeRendererToContainer);
 ro.observe(container);
 
+const kioskRo = new ResizeObserver(fitKioskContent);
+kioskRo.observe(kiosk);
+
 resizeRendererToContainer();
+fitKioskContent();
 
 function animate() {
   requestAnimationFrame(animate);
