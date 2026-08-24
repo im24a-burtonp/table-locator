@@ -170,18 +170,28 @@ function animate() {
 
 animate();
 
+const submitButton = document.querySelector(".submit");
 const maxNumberCharacters = 3;
 let enteredNumber = "";
+
+function updateSubmitState() {
+	submitButton.disabled = enteredNumber.length === 0;
+}
+
 document.querySelectorAll(".number button").forEach((button) => {
 	button.addEventListener("click", () => {
 		if (enteredNumber.length >= maxNumberCharacters) return;
 
 		enteredNumber += button.textContent.trim();
 		updateGraphicNumber(enteredNumber);
+		updateSubmitState();
 	});
 });
 
 document.querySelector(".clear button").addEventListener("click", () => {
 	enteredNumber = "";
 	updateGraphicNumber(enteredNumber);
+	updateSubmitState();
 });
+
+updateSubmitState();
