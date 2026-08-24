@@ -82,7 +82,7 @@ function updateGraphicNumber(value) {
 	numberContext.fillText(
 		value,
 		numberCanvas.width * numberPosition.x / 2,
-		numberCanvas.height * numberPosition.y -225
+		numberCanvas.height * numberPosition.y -250
 	);
 	numberTexture.needsUpdate = true;
 }
